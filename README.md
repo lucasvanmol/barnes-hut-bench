@@ -9,3 +9,5 @@ Run bench test with (requires [rust](https://www.rust-lang.org/tools/install))
 ```
 cargo bench
 ```
+
+A report will be generated in `./target/criterion/report/index.html`
