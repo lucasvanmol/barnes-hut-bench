@@ -11,3 +11,7 @@ cargo bench
 ```
 
 A report will be generated in `./target/criterion/report/index.html`
+
+## Results
+
+![results.svg](https://raw.githubusercontent.com/lucasvanmol/barnes-hut-bench/master/results.svg)
