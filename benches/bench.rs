@@ -32,7 +32,7 @@ fn calculate_forces_bf(particles: &[Particle]) {
 }
 
 fn criterion_benchmark(c: &mut Criterion) {
-    let nums = [10, 100, 500, 1000, 5000, 10000, 50000];
+    let nums = [10, 100, 1000, 10000];
     let plot_config = PlotConfiguration::default().summary_scale(AxisScale::Logarithmic);
     let mut group = c.benchmark_group("Barnes-Hut");
     group.plot_config(plot_config.clone());
