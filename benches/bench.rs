@@ -10,7 +10,7 @@ fn calculate_forces_bht(particles: &[Particle]) {
     // Construct tree
     let mut bht = BHTree::init(Cell {
         position: Position(0.0, 0.0),
-        size: 1.0,
+        size: 2.0,
     });
 
     for particle in particles {
@@ -32,7 +32,7 @@ fn calculate_forces_bf(particles: &[Particle]) {
 }
 
 fn criterion_benchmark(c: &mut Criterion) {
-    let nums = [10, 100, 1000, 10000];
+    let nums = [10, 100, 500, 1000, 5000, 10000];
     let plot_config = PlotConfiguration::default().summary_scale(AxisScale::Logarithmic);
     let mut group = c.benchmark_group("Barnes-Hut");
     group.plot_config(plot_config.clone());
@@ -41,7 +41,7 @@ fn criterion_benchmark(c: &mut Criterion) {
     for n in nums {
         let particles = get_distribution(n, distribution);
         group.throughput(Throughput::Elements(n as u64));
-        group.bench_with_input(BenchmarkId::new("bf uniform", n), &n, |b, _| {
+        group.bench_with_input(BenchmarkId::new("bf", n), &n, |b, _| {
             b.iter(|| calculate_forces_bf(black_box(&particles)))
         });
         group.bench_with_input(BenchmarkId::new("bh uniform", n), &n, |b, _| {
@@ -53,9 +53,6 @@ fn criterion_benchmark(c: &mut Criterion) {
     for n in nums {
         let particles = get_distribution(n, distribution);
         group.throughput(Throughput::Elements(n as u64));
-        group.bench_with_input(BenchmarkId::new("bf normal", n), &n, |b, _| {
-            b.iter(|| calculate_forces_bf(black_box(&particles)))
-        });
         group.bench_with_input(BenchmarkId::new("bh normal", n), &n, |b, _| {
             b.iter(|| calculate_forces_bht(black_box(&particles)))
         });
